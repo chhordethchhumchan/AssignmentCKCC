@@ -1,18 +1,20 @@
 package RestuarantReservation;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class Order implements CRUD<Food>{
 
 	private int ID;
 	private Table table;
-	private List<Food> foodList;
+	private static List<Food> listFood = new ArrayList<Food>();
 	
-	public Order(int ID, Table table, List<Food> foodList) {
+	public Order(int ID, Table table, List<Food> listFood) {
 		super();
 		this.ID = ID;
 		this.table = table;
-		this.foodList = foodList;
+		this.listFood = listFood;
 	}
 	public int getID() {
 		return ID;
@@ -30,15 +32,47 @@ public class Order implements CRUD<Food>{
 		this.table = table;
 	}
 
-	public List<Food> getFoodList() {
-		return foodList;
+	public List<Food> getlistFood() {
+		return listFood;
 	}
 
-	public void setFoodList(List<Food> foodList) {
-		this.foodList = foodList;
+	public void setlistFood(List<Food> listFood) {
+		this.listFood = listFood;
+	}
+	
+//	================= Create New Food=======================
+	
+	public static void createNewFood(){
+	
+				
 	}
 	
 	public void create(Food f) {
+		System.out.println("\t\t----------------------Create New Food Menu----------------------");
+		Scanner input = new Scanner(System.in);
+		
+			do {
+				System.out.print("Enter your food code:  ");
+				String ID = input.nextLine();
+				System.out.print("Enter your food name:  ");
+				String name = input.nextLine();
+				System.out.print("Enter your food price:  ");
+			    while (!input.hasNextDouble()) {
+		              System.out.print("You must enter a valid number! Try again: ");
+		              input.next();
+		        }
+				double price = input.nextDouble();
+				System.out.print("Do you want to add more food ?[Y/N]:   ");
+			    input.nextLine();
+			    f = new Food(ID, name, price);
+			    listFood.add(f);
+			} while (input.nextLine().equalsIgnoreCase("y"));
+			
+		
+			
+		
+	}
+	public void createOrder() {
 		Scanner input = new Scanner(System.in);
 		try {
 			do {
@@ -62,12 +96,12 @@ public class Order implements CRUD<Food>{
 				
 				System.out.println("Do you want to take more reservation?[Y/N]");
 			    input.nextLine();
+			  //  f = new Food(ID, name, price)
 			 } while (input.nextLine().equalsIgnoreCase("y"));
 		 
 		}finally {
 	          input.close();
-	    }		
-		
+	    }	
 	}
 
 	public List<Food> read() {
